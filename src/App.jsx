@@ -1,7 +1,14 @@
+import Navbar from "./components/Navbar";
+import {FiSearch} from "react-icons/fi"
+
 export default function App() {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+   <div className=" max-auto max-w-[370px]  m-4" >
+    <Navbar />
+    <div className="flex relative flex-grow items-center">
+    <FiSearch className="text-white text-3xl absolute ml-2 " />
+      <input type="text" placeholder="Search Contacts" className=" text-white pl-10 flex-grow bg-transparent h-10 border-white rounded-md border " />
+    </div>
+   </div>
   )
 }
