@@ -1,9 +1,38 @@
 import Navbar from "./components/Navbar";
 import {FiSearch} from "react-icons/fi"
 import {AiFillPlusCircle} from "react-icons/ai"
+import { useState, useEffect } from "react";
+import { collection, getDoc } from "firebase/firestore";
+import { db } from "./config/firebase";
 
 export default function App() {
+
+  const [contact, setContact] = useState([]);
+
+  useEffect(() => {
+    const getContacts = async () => {
+      try {
+        const contactsRef =  collection(db, "contacts");
+
+        const cont = await getDoc(contactsRef);
+        console.log(cont);
+
+
+
+      } catch (error) {
+        console.log(error.massege);
+      }
+    };
+
+    getContacts();
+  }, []);
+
+
   return (
+
+
+
+
    <div className=" max-auto max-w-[370px]  m-4" >
     <Navbar />
     <div className="flex relative flex-grow items-center gap-2">
