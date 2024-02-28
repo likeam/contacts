@@ -15,9 +15,6 @@ export default function App() {
         const contactsRef =  collection(db, "contacts");
 
         const cont = await getDoc(contactsRef);
-        console.log(cont);
-
-
 
       } catch (error) {
         console.log(error.massege);
