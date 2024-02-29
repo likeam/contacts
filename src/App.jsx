@@ -2,22 +2,36 @@ import Navbar from "./components/Navbar";
 import {FiSearch} from "react-icons/fi"
 import {AiFillPlusCircle} from "react-icons/ai"
 import { useState, useEffect } from "react";
-import { collection, getDoc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "./config/firebase";
+import { HiOutlineUserCircle } from "react-icons/hi";
+import { IoMdTrash } from "react-icons/io";
+import { RiEditCircleLine } from "react-icons/ri";
+
+
 
 export default function App() {
 
-  const [contact, setContact] = useState([]);
+  const [contacts, setContacts] = useState([]);
 
   useEffect(() => {
     const getContacts = async () => {
       try {
-        const contactsRef =  collection(db, "contacts");
+        const contactsRef =  collection( db, "contacts");
 
-        const cont = await getDoc(contactsRef);
+        const contactsSnapshot = await getDocs(contactsRef);
+        const contactsList = contactsSnapshot.docs.map((doc)=> {
+          return {
+            id: doc.id,
+            ...doc.data()
+          };
+        }
+        );
 
-      } catch (error) {
-        console.log(error.massege);
+        setContacts(contactsList);
+
+      } catch (e) {
+        console.log(e);
       }
     };
 
@@ -25,18 +39,38 @@ export default function App() {
   }, []);
 
 
+
+
   return (
 
-
-
-
-   <div className=" max-auto max-w-[370px]  m-4" >
-    <Navbar />
-    <div className="flex relative flex-grow items-center gap-2">
-    <FiSearch className="text-white text-3xl absolute ml-2 " />
-      <input type="text" placeholder="Search Contacts" className=" text-white pl-10 flex-grow bg-transparent h-10 border-white rounded-md border " />
-      <AiFillPlusCircle className="cursor-pointer text-5xl text-white" />   
-    </div>
-  </div>
+    
+    <div className=" max-auto max-w-[370px]  m-4" >
+      <Navbar />
+      <div className="relative flex items-center flex-grow gap-2">
+      <FiSearch className="absolute ml-2 text-3xl text-white " />
+        <input type="text" placeholder="Search Contacts" className="flex-grow h-10 pl-10 text-white bg-transparent border border-white rounded-md " />
+        <AiFillPlusCircle className="text-5xl text-white cursor-pointer" />   
+      </div> 
+      <div>
+        <div>{contacts.map((contact) => (
+          <div key={contact.id} className="flex items-center justify-around p-2 my-4 rounded-lg bg-yellow" >
+           <div className="flex gap-2">
+           <HiOutlineUserCircle className="text-4xl text-orange" />
+            <div>
+              <h2 >Name: {contact.name}</h2>
+              <p>Cell  # : +{contact.mobile}</p>
+            </div>
+           </div>
+            <div>
+              <IoMdTrash />
+              <RiEditCircleLine />
+            </div>
+         </div>
+        ))}</div>
+      </div>
+    </div>   
+    
+    
+  
   )
 }
