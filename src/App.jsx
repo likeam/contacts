@@ -46,7 +46,7 @@ export default function App() {
     
     <div className=" max-auto max-w-[370px]  m-4" >
       <Navbar />
-      <div className="relative flex items-center flex-grow gap-2">
+      <div className="relative flex items-center flex-grow gap-1">
       <FiSearch className="absolute ml-2 text-3xl text-white " />
         <input type="text" placeholder="Search Contacts" className="flex-grow h-10 pl-10 text-white bg-transparent border border-white rounded-md " />
         <AiFillPlusCircle className="text-5xl text-white cursor-pointer" />   
@@ -57,13 +57,13 @@ export default function App() {
            <div className="flex gap-2">
            <HiOutlineUserCircle className="text-4xl text-orange" />
             <div>
-              <h2 >Name: {contact.name}</h2>
-              <p>Cell  # : +{contact.mobile}</p>
+              <h2 className="font-bold" >Name: {contact.name}</h2>
+              <p className="font-medium" >Cell  # : +{contact.mobile}</p>
             </div>
            </div>
-            <div>
-              <IoMdTrash />
-              <RiEditCircleLine />
+            <div className="flex text-3xl">
+            <RiEditCircleLine   />
+              <IoMdTrash className="text-orange" />
             </div>
          </div>
         ))}</div>
