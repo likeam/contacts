@@ -4,15 +4,25 @@ import {AiFillPlusCircle} from "react-icons/ai"
 import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "./config/firebase";
-import { HiOutlineUserCircle } from "react-icons/hi";
-import { IoMdTrash } from "react-icons/io";
-import { RiEditCircleLine } from "react-icons/ri";
+import ContactCard from "./components/ContactCard";
+import Modal from "./components/Modal";
+
 
 
 
 export default function App() {
 
   const [contacts, setContacts] = useState([]);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onOpen = () => {
+    setIsOpen(true);
+  };
+
+  const onClose = () => {
+    setIsOpen(false);
+  };
 
   useEffect(() => {
     const getContacts = async () => {
@@ -43,34 +53,22 @@ export default function App() {
 
   return (
 
-    
+  <>   
     <div className=" max-auto max-w-[370px]  m-4" >
       <Navbar />
       <div className="relative flex items-center flex-grow gap-1">
       <FiSearch className="absolute ml-2 text-3xl text-white " />
         <input type="text" placeholder="Search Contacts" className="flex-grow h-10 pl-10 text-white bg-transparent border border-white rounded-md " />
-        <AiFillPlusCircle className="text-5xl text-white cursor-pointer" />   
+        <AiFillPlusCircle onClick={onOpen} className="text-5xl text-white cursor-pointer" />   
       </div> 
       <div>
         <div>{contacts.map((contact) => (
-          <div key={contact.id} className="flex items-center justify-around p-2 my-4 rounded-lg bg-yellow" >
-           <div className="flex gap-2">
-           <HiOutlineUserCircle className="text-4xl text-orange" />
-            <div>
-              <h2 className="font-bold" >Name: {contact.name}</h2>
-              <p className="font-medium" >Cell  # : +{contact.mobile}</p>
-            </div>
-           </div>
-            <div className="flex text-3xl">
-            <RiEditCircleLine   />
-              <IoMdTrash className="text-orange" />
-            </div>
-         </div>
+          <ContactCard  key={contact.id} contact={contact} />
         ))}</div>
       </div>
-    </div>   
-    
-    
+    </div>  
+          <Modal isOpen={isOpen} onClose={onClose} >Hi</Modal>
+    </>  
   
   )
 }
