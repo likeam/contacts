@@ -6,6 +6,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "./config/firebase";
 import ContactCard from "./components/ContactCard";
 import Modal from "./components/Modal";
+import AddUpdateContact from "./components/AddUpdateContact";
 
 
 
@@ -67,7 +68,7 @@ export default function App() {
         ))}</div>
       </div>
     </div>  
-          <Modal isOpen={isOpen} onClose={onClose} >Hi</Modal>
+          <AddUpdateContact isOpen={isOpen} onClose={onClose} />
     </>  
   
   )
